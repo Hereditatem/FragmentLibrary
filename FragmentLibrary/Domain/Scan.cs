@@ -7,6 +7,16 @@ namespace FragmentLibrary.Domain
 {
     public class Scan
     {
-        public long Id { get; private set; }
+        protected Scan()
+        {
+
+        }
+
+        public Scan(string originalImageId)
+        {
+            OriginalImageId = originalImageId;
+        }
+
+        public string OriginalImageId { get; private set; }
     }
 }

@@ -12,20 +12,13 @@ namespace FragmentLibrary.Domain
 
         }
 
-        public Fragment(
-            Scan frontScan,
-            Scan backScan,
-            Scan frontWithoutBgScan,
-            Scan backWithoutBgScan
-            ) : this()
-        {
-            FrontScan = frontScan ?? throw new ArgumentNullException(nameof(frontScan));
-            BacktScan = backScan ?? throw new ArgumentNullException(nameof(backScan));
-            FrontScanWithoutBackground = frontWithoutBgScan ?? throw new ArgumentNullException(nameof(frontWithoutBgScan));
-            BackScanWithoutBackground = backWithoutBgScan ?? throw new ArgumentNullException(nameof(backWithoutBgScan));
-        }
-
         public long Id { get; private set; }
+
+        public string Name { get; private set; }
+
+        public int? PanelId { get; private set; }
+
+        public bool PanelIsKnown => PanelId.HasValue;
 
         public Scan FrontScan { get; private set; }
 
@@ -33,9 +26,9 @@ namespace FragmentLibrary.Domain
 
         public FrontToBackScanAlignment FrontToBackScanAlignment { get; private set; }
 
-        public Scan FrontScanWithoutBackground { get; private set; }
+        public ProcessedScan FrontScanWithoutBackground { get; private set; }
 
-        public Scan BackScanWithoutBackground { get; private set; }
+        public ProcessedScan BackScanWithoutBackground { get; private set; }
 
         public FrontToBackScanAlignment FrontToBackWithoutBackgroundScanAlignment { get; private set; }
 
@@ -47,6 +40,61 @@ namespace FragmentLibrary.Domain
         public void SetFrontToBackWithoutBackgroundScanAlignment(FrontToBackScanAlignment frontToBackScanAlignment)
         {
             FrontToBackWithoutBackgroundScanAlignment = frontToBackScanAlignment;
+        }
+
+        public static Fragment BuildTransient(
+            string name,
+            Scan frontScan,
+            Scan backScan,
+            ProcessedScan frontWithoutBgScan,
+            ProcessedScan backWithoutBgScan)
+        {
+            return new Fragment()
+            {
+                Name = name ?? throw new ArgumentNullException(nameof(name)),
+                FrontScan = frontScan ?? throw new ArgumentNullException(nameof(frontScan)),
+                BacktScan = backScan ?? throw new ArgumentNullException(nameof(backScan)),
+                FrontScanWithoutBackground = frontWithoutBgScan ?? throw new ArgumentNullException(nameof(frontWithoutBgScan)),
+                BackScanWithoutBackground = backWithoutBgScan ?? throw new ArgumentNullException(nameof(backWithoutBgScan)),
+            };
+        }
+
+        public static Fragment BuildTransientWithKnownPanel(
+            string name,
+           Scan frontScan,
+           Scan backScan,
+           ProcessedScan frontWithoutBgScan,
+           ProcessedScan backWithoutBgScan,
+           int panelId)
+        {
+            var transient = BuildTransient(name, frontScan, backScan, frontWithoutBgScan, backWithoutBgScan);
+            transient.PanelId = panelId;
+            return transient;
+        }
+
+        public static Fragment BuildFromRepository(
+            long id,
+            string name,
+            Scan frontScan,
+            Scan backScan,
+            ProcessedScan frontWithoutBgScan,
+            ProcessedScan backWithoutBgScan,
+            FrontToBackScanAlignment frontToBackScanAlignment,
+            FrontToBackScanAlignment frontToBackWithoutBackgroundScanAlignment,
+            int? panelId)
+
+        {
+            return new Fragment()
+            {
+                Name = name ?? throw new ArgumentNullException(nameof(name)),
+                FrontScan = frontScan ?? throw new ArgumentNullException(nameof(frontScan)),
+                BacktScan = backScan ?? throw new ArgumentNullException(nameof(backScan)),
+                FrontScanWithoutBackground = frontWithoutBgScan ?? throw new ArgumentNullException(nameof(frontWithoutBgScan)),
+                BackScanWithoutBackground = backWithoutBgScan ?? throw new ArgumentNullException(nameof(backWithoutBgScan)),
+                FrontToBackScanAlignment = frontToBackScanAlignment,
+                FrontToBackWithoutBackgroundScanAlignment = frontToBackWithoutBackgroundScanAlignment,
+                PanelId = panelId
+            };
         }
     }
 }
