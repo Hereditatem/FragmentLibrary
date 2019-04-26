@@ -12,12 +12,20 @@ namespace FragmentLibrary.Application.Dto
 
         public string Name { get; set; }
 
-        public IFormFile FrontScan { get; set; }
+        public byte[] FrontScan { get; set; }
 
-        public IFormFile BackScan { get; set; }
+        public string FrontScanContentType { get; set; }
 
-        public IFormFile FrontScanWithoutBackground { get; set; }
+        public byte[] BackScan { get; set; }
 
-        public IFormFile BackScanWithoutBackground { get; set; }
+        public string BackScanContentType { get; set; }
+
+        public byte[] FrontScanWithoutBackground { get; set; }
+
+        public string FrontScanWithoutBackgroundContentType { get; set; }
+
+        public byte[] BackScanWithoutBackground { get; set; }
+
+        public string BackScanWithoutBackgroundContentType { get; set; }
     }
 }

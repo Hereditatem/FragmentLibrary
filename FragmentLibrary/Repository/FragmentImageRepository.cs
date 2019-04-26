@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using FragmentLibrary.Controllers.Viewmodels.Fragment;
 using FragmentLibrary.Domain;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -28,7 +30,7 @@ namespace FragmentLibrary.Repository
 
         }
 
-        public async Task<string> AddScanImage(ScanImage image)
+        public async Task<string> Add(ScanImage image)
         {
             var id = await _bucket.UploadFromBytesAsync(Guid.NewGuid().ToString(), image.Data, new GridFSUploadOptions()
             {

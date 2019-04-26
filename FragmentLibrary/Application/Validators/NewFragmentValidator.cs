@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using FragmentLibrary.Application.Dto;
+﻿using FragmentLibrary.Application.Dto;
 using FragmentLibrary.Application.Exceptions;
 using FragmentLibrary.Domain;
+using System.Collections.Generic;
 
 namespace FragmentLibrary.Application.Validators
 {
@@ -34,7 +33,8 @@ namespace FragmentLibrary.Application.Validators
             }
 
             // Front Scan
-            if (newFragment.FrontScan.Length == 0)
+            if (newFragment.FrontScan == null
+                || newFragment.FrontScan.Length == 0)
             {
                 validationErrors.Add(
                     new InvalidFieldMessage
@@ -43,8 +43,8 @@ namespace FragmentLibrary.Application.Validators
                         Message = $"Front Scan image is required"
                     });
             }
-            if (newFragment.FrontScan.ContentType == null
-                 || ImageFormat.FromMimeType(newFragment.FrontScan.ContentType) == null)
+            if (string.IsNullOrEmpty(newFragment.FrontScanContentType)
+                 || ImageFormat.FromMimeType(newFragment.FrontScanContentType) == null)
             {
                 validationErrors.Add(
                     new InvalidFieldMessage
@@ -55,7 +55,8 @@ namespace FragmentLibrary.Application.Validators
             }
 
             // Back Scan
-            if (newFragment.BackScan.Length == 0)
+            if (newFragment.BackScan == null
+                || newFragment.BackScan.Length == 0)
             {
                 validationErrors.Add(
                     new InvalidFieldMessage
@@ -64,8 +65,8 @@ namespace FragmentLibrary.Application.Validators
                         Message = $"Back Scan image is required"
                     });
             }
-            if (newFragment.BackScan.ContentType == null
-                 || ImageFormat.FromMimeType(newFragment.BackScan.ContentType) == null)
+            if (string.IsNullOrEmpty(newFragment.BackScanContentType)
+                 || ImageFormat.FromMimeType(newFragment.BackScanContentType) == null)
             {
                 validationErrors.Add(
                     new InvalidFieldMessage
@@ -76,7 +77,8 @@ namespace FragmentLibrary.Application.Validators
             }
 
             // Front Scan Without background
-            if (newFragment.FrontScanWithoutBackground.Length == 0)
+            if (newFragment.FrontScanWithoutBackground == null
+                || newFragment.FrontScanWithoutBackground.Length == 0)
             {
                 validationErrors.Add(
                     new InvalidFieldMessage
@@ -85,7 +87,8 @@ namespace FragmentLibrary.Application.Validators
                         Message = $"Back Scan image is required"
                     });
             }
-            if (newFragment.FrontScanWithoutBackground.ContentType != ImageFormat.Png.MimeType)
+            if (string.IsNullOrEmpty(newFragment.FrontScanWithoutBackgroundContentType)
+                || newFragment.FrontScanWithoutBackgroundContentType != ImageFormat.Png.MimeType)
             {
                 validationErrors.Add(
                     new InvalidFieldMessage
@@ -96,7 +99,8 @@ namespace FragmentLibrary.Application.Validators
             }
 
             // Back Scan Without background
-            if (newFragment.BackScanWithoutBackground.Length == 0)
+            if (newFragment.BackScanWithoutBackground == null
+                || newFragment.BackScanWithoutBackground.Length == 0)
             {
                 validationErrors.Add(
                     new InvalidFieldMessage
@@ -105,7 +109,7 @@ namespace FragmentLibrary.Application.Validators
                         Message = $"Back Scan image is required"
                     });
             }
-            if (newFragment.BackScanWithoutBackground.ContentType != ImageFormat.Png.MimeType)
+            if (newFragment.BackScanWithoutBackgroundContentType != ImageFormat.Png.MimeType)
             {
                 validationErrors.Add(
                     new InvalidFieldMessage
@@ -116,7 +120,9 @@ namespace FragmentLibrary.Application.Validators
             }
 
             if (validationErrors.Count > 0)
+            {
                 throw new ValidationException(validationErrors);
+            }
         }
     }
 }

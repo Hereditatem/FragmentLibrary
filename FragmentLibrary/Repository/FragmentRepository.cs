@@ -69,9 +69,20 @@ namespace FragmentLibrary.Repository
             });
         }
 
-        public async Task Add(Fragment fragment)
+        public async Task<Fragment> Add(Fragment fragment)
         {          
             await _fragmentsCollection.InsertOneAsync(fragment);
+            return fragment;
+        }
+
+        public async Task<Fragment> Find(long id)
+        {
+            return await _fragmentsCollection.Find(f => f.Id == id).SingleAsync();
+        }
+
+        public async Task<ICollection<Fragment>> List()
+        {
+            return await _fragmentsCollection.Find(FilterDefinition<Fragment>.Empty).ToListAsync();
         }
 
         public async Task<ICollection<Fragment>> FindPanelFragments(int panelId)
