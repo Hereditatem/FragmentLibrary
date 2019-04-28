@@ -24,6 +24,8 @@ namespace FragmentLibrary.Domain
 
         public Scan BacktScan { get; private set; }
 
+        public DateTime InsertionDateTime { get; set; }
+
         public FrontToBackScanAlignment FrontToBackScanAlignment { get; private set; }
 
         public ProcessedScan FrontScanWithoutBackground { get; private set; }
@@ -56,6 +58,7 @@ namespace FragmentLibrary.Domain
                 BacktScan = backScan ?? throw new ArgumentNullException(nameof(backScan)),
                 FrontScanWithoutBackground = frontWithoutBgScan ?? throw new ArgumentNullException(nameof(frontWithoutBgScan)),
                 BackScanWithoutBackground = backWithoutBgScan ?? throw new ArgumentNullException(nameof(backWithoutBgScan)),
+                InsertionDateTime = DateTime.UtcNow
             };
         }
 

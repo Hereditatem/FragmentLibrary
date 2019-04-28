@@ -1,3 +1,5 @@
+using FragmentLibrary.Application;
+using FragmentLibrary.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NJsonSchema;
+using NSwag.AspNetCore;
+using MongoDB.Driver;
 
 namespace FragmentLibrary
 {
@@ -20,6 +25,15 @@ namespace FragmentLibrary
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string mongoConnectionString = "mongodb://localhost:27017"; //Configuration.GetValue<string>("Repositories.MongoDB")
+            services.AddSingleton(new MongoClient(mongoConnectionString));
+
+            services.AddTransient<FragmentRepository>();
+            services.AddTransient<FragmentImageRepository>();
+            services.AddTransient<FragmetService>();
+
+            services.AddSwaggerDocument();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the React files will be served from this directory
@@ -27,6 +41,7 @@ namespace FragmentLibrary
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +78,10 @@ namespace FragmentLibrary
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUi3();
+
         }
     }
 }

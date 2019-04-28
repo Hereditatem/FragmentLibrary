@@ -16,7 +16,7 @@ namespace FragmentLibrary.Repository
             _fragmentsCollection = db.GetCollection<Fragment>("fragments");
         }
 
-        public static void Initialize()
+        static FragmentRepository()
         {
             BsonClassMap.RegisterClassMap<Fragment>(fmap =>
             {
@@ -29,6 +29,7 @@ namespace FragmentLibrary.Repository
                 fmap.MapMember(f => f.FrontToBackScanAlignment);
                 fmap.MapMember(f => f.FrontToBackWithoutBackgroundScanAlignment);
                 fmap.MapMember(f => f.PanelId);
+                fmap.MapMember(f => f.InsertionDateTime);
                 fmap.MapCreator(f => Fragment.BuildFromRepository(
                                                 f.Id,
                                                 f.Name,

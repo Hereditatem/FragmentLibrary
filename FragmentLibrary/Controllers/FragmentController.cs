@@ -40,6 +40,12 @@ namespace FragmentLibrary.Controllers
             return Ok(/*new { count = files.Count, size, filePath }*/);
         }
 
+        public async Task<FileStreamResult> FetchImage(string imageId)
+        {
+            var image = await _fragmentService.FindImage(imageId);
+            return new FileStreamResult(new MemoryStream(image.Data), image.ContentType);
+        }
+
         private async Task<NewFragmentDto> MapViewmodelToDto(NewFragmentViewModel viewmodel)
         {
             byte[] frontScanData = null,

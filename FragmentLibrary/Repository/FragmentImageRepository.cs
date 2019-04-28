@@ -17,8 +17,9 @@ namespace FragmentLibrary.Repository
         private IMongoCollection<GridFSFileInfo> _filesCollection;
 
 
-        public FragmentImageRepository(IMongoDatabase database)
+        public FragmentImageRepository(MongoClient dbClient)
         {
+            var database = dbClient.GetDatabase("fragmentImages");
             _bucket = new GridFSBucket(database, new GridFSBucketOptions
             {
                 BucketName = BUCKET_NAME,
@@ -42,7 +43,7 @@ namespace FragmentLibrary.Repository
             return id.ToString();
         }
 
-        public async Task<ScanImage> GetScanImageAsync(string imageId)
+        public async Task<ScanImage> Find(string imageId)
         {
             var id = new ObjectId(imageId);
             var bytes = await _bucket.DownloadAsBytesAsync(id);
