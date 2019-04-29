@@ -12,7 +12,7 @@ namespace FragmentLibrary.Domain
 
         }
 
-        public long Id { get; private set; }
+        public string Id { get; private set; }
 
         public string Name { get; private set; }
 
@@ -76,7 +76,7 @@ namespace FragmentLibrary.Domain
         }
 
         public static Fragment BuildFromRepository(
-            long id,
+            string id,
             string name,
             Scan frontScan,
             Scan backScan,

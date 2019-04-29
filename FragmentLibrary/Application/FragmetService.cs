@@ -30,7 +30,7 @@ namespace FragmentLibrary.Application
             _fragmentImageRepository = fragmentImageRepository;
         }
 
-        public async Task<long> CreateFragment(NewFragmentDto newFragment)
+        public async Task<FragmentDetailsDto> CreateFragment(NewFragmentDto newFragment)
         {
             NewFragmentValidator.ThrowIfNotValid(newFragment);
 
@@ -105,7 +105,7 @@ namespace FragmentLibrary.Application
                                         SmallImageId = smallBackScanWithoutBgImageId
                                     }));
 
-            return savedFragment.Id;
+            return MapToDto(savedFragment);
         }
 
 
@@ -139,7 +139,7 @@ namespace FragmentLibrary.Application
             return result;
         }
 
-        public async Task<FragmentDetailsDto> Find(long id)
+        public async Task<FragmentDetailsDto> Find(string id)
         {
             var fragment = await _fragmentRepository.Find(id);
             return MapToDto(fragment);
@@ -153,33 +153,35 @@ namespace FragmentLibrary.Application
                 Name = fragment.Name,
                 FrontScan = new ScanImageInfoDto()
                 {
-                    OriginalImageID = fragment.FrontScan.OriginalImageId
+                    OriginalImageID = fragment.FrontScan?.OriginalImageId
                 },
                 BackScan = new ScanImageInfoDto()
                 {
-                    OriginalImageID = fragment.BacktScan.OriginalImageId
+                    OriginalImageID = fragment.BacktScan?.OriginalImageId
                 },
                 FrontScanWithoutBackground = new ScanImageInfoDto()
                 {
-                    OriginalImageID = fragment.FrontScanWithoutBackground.OriginalImageId,
-                    LargeImageID = fragment.FrontScanWithoutBackground.LargeImageId,
-                    MediumImageID = fragment.FrontScanWithoutBackground.MediumImageId,
-                    SmallImageID = fragment.FrontScanWithoutBackground.SmallImageId
+                    OriginalImageID = fragment.FrontScanWithoutBackground?.OriginalImageId,
+                    LargeImageID = fragment.FrontScanWithoutBackground?.LargeImageId,
+                    MediumImageID = fragment.FrontScanWithoutBackground?.MediumImageId,
+                    SmallImageID = fragment.FrontScanWithoutBackground?.SmallImageId
                 },
                 BackScanWithoutBackground = new ScanImageInfoDto()
                 {
-                    OriginalImageID = fragment.BackScanWithoutBackground.OriginalImageId,
-                    LargeImageID = fragment.BackScanWithoutBackground.LargeImageId,
-                    MediumImageID = fragment.BackScanWithoutBackground.MediumImageId,
-                    SmallImageID = fragment.BackScanWithoutBackground.SmallImageId
-                },
-                FrontToBackAlignment = new AlignmentDto()
+                    OriginalImageID = fragment.BackScanWithoutBackground?.OriginalImageId,
+                    LargeImageID = fragment.BackScanWithoutBackground?.LargeImageId,
+                    MediumImageID = fragment.BackScanWithoutBackground?.MediumImageId,
+                    SmallImageID = fragment.BackScanWithoutBackground?.SmallImageId
+                },                
+                FrontToBackAlignment = fragment.FrontToBackWithoutBackgroundScanAlignment != null ? 
+                new AlignmentDto()
                 {
                     Left = fragment.FrontToBackWithoutBackgroundScanAlignment.Left,
                     Right = fragment.FrontToBackWithoutBackgroundScanAlignment.Right,
                     Scale = fragment.FrontToBackWithoutBackgroundScanAlignment.Scale,
                     Angle = fragment.FrontToBackWithoutBackgroundScanAlignment.Angle,
-                }
+                } 
+                : null
             };
         }
 

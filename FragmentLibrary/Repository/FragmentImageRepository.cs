@@ -47,7 +47,9 @@ namespace FragmentLibrary.Repository
         {
             var id = new ObjectId(imageId);
             var bytes = await _bucket.DownloadAsBytesAsync(id);
-            var fileInfo = await _filesCollection.Find(fi =>  fi.Id == id).SingleAsync();
+            FilterDefinitionBuilder<GridFSFileInfo> builder = Builders<GridFSFileInfo>.Filter;
+            FilterDefinition<GridFSFileInfo> filter = builder.Eq("_id", id);
+            var fileInfo = await _filesCollection.Find(filter).SingleAsync();
             string formatStr = fileInfo.Metadata.GetValue(nameof(ScanImage.Format)).AsString;
             return ScanImage.BuidFromRepository(id.ToString(), bytes, ImageFormat.FromExtension(formatStr));
         }

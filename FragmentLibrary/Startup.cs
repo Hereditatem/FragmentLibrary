@@ -32,9 +32,9 @@ namespace FragmentLibrary
             services.AddTransient<FragmentImageRepository>();
             services.AddTransient<FragmetService>();
 
-            services.AddSwaggerDocument();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerDocument();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -62,12 +62,20 @@ namespace FragmentLibrary
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvc(routes =>
+            app.UseMvc(
+            //routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller}/{action=Index}/{id?}");
+            //}
+            );
+
+            if (env.IsDevelopment())
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
+                app.UseSwagger();
+                app.UseSwaggerUi3();
+            }
 
             app.UseSpa(spa =>
             {
@@ -78,10 +86,6 @@ namespace FragmentLibrary
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-
-            app.UseSwagger();
-            app.UseSwaggerUi3();
-
         }
     }
 }

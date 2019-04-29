@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FragmentLibrary.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/fragment")]
     public class FragmentController : Controller
     {
         private FragmetService _fragmentService;
@@ -27,8 +27,8 @@ namespace FragmentLibrary.Controllers
             return await _fragmentService.GetAll();
         }
 
-        [HttpGet]
-        public async Task<FragmentDetailsDto> Index(long fragmentId)
+        [HttpGet(template: "{fragmentId}")]
+        public async Task<FragmentDetailsDto> Index([FromRoute]string fragmentId)
         {
             return await _fragmentService.Find(fragmentId);
         }
@@ -36,10 +36,11 @@ namespace FragmentLibrary.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(NewFragmentViewModel newFragment)
         {
-            await _fragmentService.CreateFragment(await MapViewmodelToDto(newFragment));
-            return Ok(/*new { count = files.Count, size, filePath }*/);
+            var createdFragment = await _fragmentService.CreateFragment(await MapViewmodelToDto(newFragment));
+            return Ok(new { fragment = createdFragment });
         }
 
+        [HttpGet(template: "image/{imageId}")]
         public async Task<FileStreamResult> FetchImage(string imageId)
         {
             var image = await _fragmentService.FindImage(imageId);

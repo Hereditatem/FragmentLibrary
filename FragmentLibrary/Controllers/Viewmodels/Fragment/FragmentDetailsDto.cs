@@ -8,7 +8,7 @@ namespace FragmentLibrary.Controllers.Viewmodels.Fragment
 
     public class FragmentDetailsDto
     {
-        public long Id{ get; set; }
+        public string Id{ get; set; }
 
         public string Name { get; set; }
         
