@@ -232,3 +232,7 @@ _Pvt_Extensions
 .fake/
 
 \.vscode/
+
+\.idea/\.idea\.FragmentLibrary/\.idea/
+
+\.idea/\.idea\.FragmentLibrary/
