@@ -57,11 +57,9 @@ export interface FetchArgs {
 export class BaseAPI {
     protected configuration: Configuration;
 
-    constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {
-        if (configuration) {
-            this.configuration = configuration;
-            this.basePath = configuration.basePath || this.basePath;
-        }
+    constructor(configuration: Configuration, protected basePath: string = BASE_PATH, protected fetch: FetchAPI = portableFetch) {        
+        this.configuration = configuration;
+        this.basePath = configuration.basePath || this.basePath;        
     }
 };
 
@@ -72,9 +70,10 @@ export class BaseAPI {
  * @extends {Error}
  */
 export class RequiredError extends Error {
-    name: "RequiredError"
+    name: string;
     constructor(public field: string, msg?: string) {
         super(msg);
+        this.name = "RequiredError";
     }
 }
 
