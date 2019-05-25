@@ -4,13 +4,14 @@ import {
     Segment,
     Grid,
     Image } from 'semantic-ui-react';
+import './tileDetails.scss';
 
 class TileDetails extends React.Component{
     constructor(props){
         super(props);
         this.state={
             id: props.match.params.id,
-            name: "",
+            name: "Tile Name",
             frontScan: "",
             backScan: "",
             frontScanWithoutBackground: "",
