@@ -37,7 +37,7 @@ class TileAdd extends React.Component {
             this.frontScanFileWithoutBg.current.files[0],
             this.backScanFileWithoutBg.current.files[0]
         ).then((res, error) =>{
-            if(res){
+            if(res && !error){
                 const {
                     id
                 } = res;

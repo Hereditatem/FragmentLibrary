@@ -15,7 +15,8 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
     "semantic-ui-react": "^0.86.0",
-    "typescript": "3.4.5"
+    "typescript": "3.4.5",
+    "url": "^0.11.0"
   },
   "scripts": {
     "start": "react-scripts start",

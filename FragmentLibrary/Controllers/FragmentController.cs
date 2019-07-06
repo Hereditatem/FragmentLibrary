@@ -54,7 +54,7 @@ namespace FragmentLibrary.Controllers
                    frontScanWithoutBackgroumdData = null,
                    backScanWithoutBackgroumdData = null;
 
-            if (viewmodel.FrontScan.Length > 0)
+            if (viewmodel.FrontScan?.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
                 {
@@ -64,7 +64,7 @@ namespace FragmentLibrary.Controllers
             }
 
 
-            if (viewmodel.BackScan.Length > 0)
+            if (viewmodel.BackScan?.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
                 {
@@ -74,7 +74,7 @@ namespace FragmentLibrary.Controllers
             }
 
 
-            if (viewmodel.FrontScanWithoutBackground.Length > 0)
+            if (viewmodel.FrontScanWithoutBackground?.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
                 {
@@ -84,7 +84,7 @@ namespace FragmentLibrary.Controllers
             }
 
 
-            if (viewmodel.BackScanWithoutBackground.Length > 0)
+            if (viewmodel.BackScanWithoutBackground?.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
                 {
@@ -93,17 +93,17 @@ namespace FragmentLibrary.Controllers
                 }
             }
 
-            return new NewFragmentDto()
+             return new NewFragmentDto()
             {
                 Name = viewmodel.Name,
                 FrontScan = frontScanData,
-                FrontScanContentType = viewmodel.FrontScan.ContentType,
+                FrontScanContentType = viewmodel.FrontScan?.ContentType,
                 BackScan = backScanData,
-                BackScanContentType = viewmodel.BackScan.ContentType,
+                BackScanContentType = viewmodel.BackScan?.ContentType,
                 FrontScanWithoutBackground = frontScanWithoutBackgroumdData,
-                FrontScanWithoutBackgroundContentType = viewmodel.FrontScanWithoutBackground.ContentType,
+                FrontScanWithoutBackgroundContentType = viewmodel.FrontScanWithoutBackground?.ContentType,
                 BackScanWithoutBackground = backScanWithoutBackgroumdData,
-                BackScanWithoutBackgroundContentType = viewmodel.BackScanWithoutBackground.ContentType
+                BackScanWithoutBackgroundContentType = viewmodel.BackScanWithoutBackground?.ContentType
             };
 
         }

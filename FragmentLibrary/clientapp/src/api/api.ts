@@ -16,7 +16,7 @@
 import * as url from "url";
 import * as portableFetch from "portable-fetch";
 import { Configuration } from "./configuration";
-
+url.URLSearchParams = URLSearchParams;
 const BASE_PATH = "https://localhost:5001".replace(/\/+$/, "");
 
 /**

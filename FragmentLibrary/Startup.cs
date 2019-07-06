@@ -19,7 +19,7 @@ namespace FragmentLibrary
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            CurrentDirectoryHelpers.SetCurrentDirectory();
+         //   CurrentDirectoryHelpers.SetCurrentDirectory();
         }
 
         public IConfiguration Configuration { get; }

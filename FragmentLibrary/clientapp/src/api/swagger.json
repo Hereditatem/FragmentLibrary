@@ -1,0 +1,279 @@
+{
+  "x-generator": "NSwag v12.2.4.0 (NJsonSchema v9.13.36.0 (Newtonsoft.Json v11.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "My Title",
+    "version": "1.0.0"
+  },
+  "host": "localhost:5001",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/fragment": {
+      "get": {
+        "tags": [
+          "Fragment"
+        ],
+        "operationId": "Fragment_IndexAll",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FragmentDetailsDto"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Fragment"
+        ],
+        "operationId": "Fragment_Index",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "Name",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "file",
+            "name": "FrontScan",
+            "in": "formData",
+            "x-nullable": true
+          },
+          {
+            "type": "file",
+            "name": "BackScan",
+            "in": "formData",
+            "x-nullable": true
+          },
+          {
+            "type": "file",
+            "name": "FrontScanWithoutBackground",
+            "in": "formData",
+            "x-nullable": true
+          },
+          {
+            "type": "file",
+            "name": "BackScanWithoutBackground",
+            "in": "formData",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/fragment/{fragmentId}": {
+      "get": {
+        "tags": [
+          "Fragment"
+        ],
+        "operationId": "Fragment_Index2",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "fragmentId",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FragmentDetailsDto"
+            }
+          }
+        }
+      }
+    },
+    "/api/fragment/image/{imageId}": {
+      "get": {
+        "tags": [
+          "Fragment"
+        ],
+        "operationId": "Fragment_FetchImage",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "imageId",
+            "in": "path",
+            "required": true,
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/SampleData/WeatherForecasts": {
+      "get": {
+        "tags": [
+          "SampleData"
+        ],
+        "operationId": "SampleData_WeatherForecasts",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "startDateIndex",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/WeatherForecast"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FragmentDetailsDto": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "frontScan": {
+          "$ref": "#/definitions/ScanImageInfoDto"
+        },
+        "backScan": {
+          "$ref": "#/definitions/ScanImageInfoDto"
+        },
+        "frontScanWithoutBackground": {
+          "$ref": "#/definitions/ScanImageInfoDto"
+        },
+        "backScanWithoutBackground": {
+          "$ref": "#/definitions/ScanImageInfoDto"
+        },
+        "frontToBackAlignment": {
+          "$ref": "#/definitions/AlignmentDto"
+        }
+      }
+    },
+    "ScanImageInfoDto": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "originalImageID": {
+          "type": "string"
+        },
+        "largeImageID": {
+          "type": "string"
+        },
+        "mediumImageID": {
+          "type": "string"
+        },
+        "smallImageID": {
+          "type": "string"
+        }
+      }
+    },
+    "AlignmentDto": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "left",
+        "right",
+        "scale",
+        "angle"
+      ],
+      "properties": {
+        "left": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "right": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "scale": {
+          "type": "number",
+          "format": "double"
+        },
+        "angle": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "WeatherForecast": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "temperatureC",
+        "temperatureF"
+      ],
+      "properties": {
+        "dateFormatted": {
+          "type": "string"
+        },
+        "temperatureC": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "temperatureF": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}
